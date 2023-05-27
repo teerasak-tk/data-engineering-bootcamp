@@ -1,0 +1,4 @@
+ได้สร้างไฟล์ networkrail_movements_to_gcs_and_then_bigquery
+ลำดับการทำงาน
+1.  ดึง data จาก postgres โดยใช้ PostgresHook
+    ตัว PostgresHook จะจำเป็นต้องเซ็ท Connection จาก airflow ก่อน แล้วนำค่า Conn ที่เซ็ทไว้มาใส่ที่ postgres_conn_id

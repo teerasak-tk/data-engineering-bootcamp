@@ -1,0 +1,21 @@
+networkrail:
+  target: dbt_tea
+
+  outputs:
+    dbt_tea:
+      type: bigquery
+      method: service-account
+      project: deb-2023
+      dataset: dbt_tea
+      threads: 1
+      keyfile: /workspace/data-engineering-bootcamp/07-end-to-end-project/dags/deb-2023-eb731094ca12-bq-gcs.json
+      location: asia-southeast1
+
+    prod:
+      type: bigquery
+      method: service-account
+      project: deb-2023
+      dataset: networkrail
+      threads: 1
+      keyfile: /workspace/data-engineering-bootcamp/07-end-to-end-project/dags/deb-2023-eb731094ca12-bq-gcs.json
+      location: asia-southeast1
