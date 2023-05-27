@@ -1,0 +1,18 @@
+version: 2
+
+exposures:
+
+  - name: networkrail_train_movement_data
+    label: Network Rail Train Movement Data
+    type: dashboard
+    maturity: high
+    url: https://lookerstudio.google.com/s/i9i7dx3RHzc  # Change to your dashboard's URL
+    description: >
+      Network Rail Train Movement Data
+
+    depends_on:
+      - ref('fct_movements')
+
+    owner:
+      name: Tea Tearasak  # Change to your name
+      email: tearasak.tk@gmail.com  # Change to your email

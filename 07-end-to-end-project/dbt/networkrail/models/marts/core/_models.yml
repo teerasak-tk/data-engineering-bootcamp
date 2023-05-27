@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: fct_movements
+    description: Fact table for movement data
+    columns:
+      - name: event_type
+        description: Event type
+      - name: actual_timestamp_utc
+        description: Actual timestamp in UTC
+      - name: event_source
+        description: Event source
+      - name: train_id
+        description: Train ID
+      - name: variation_status
+        description: Status of variation
+      - name: toc_id
+        description: Toc ID
+      - name: company_name
+        description: Company name  

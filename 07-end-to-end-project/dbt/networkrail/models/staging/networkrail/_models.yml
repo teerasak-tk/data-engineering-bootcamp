@@ -1,0 +1,223 @@
+version: 2
+
+models:
+  - name: stg_networkrail__movements
+    description: Staging model for Network Rail movement data
+    columns:
+      - name: event_type
+        description: Event type
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['ARRIVAL', 'DEPARTURE']
+          - dbt_expectations.expect_column_to_exist
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: string
+      - name: actual_timestamp_utc
+        description: Actual timestamp in UTC
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_to_exist
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: timestamp
+      - name: gbtt_timestamp_utc
+        description: The planned GBTT (passenger) date and time that the event was due to happen at this location
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_to_exist
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: timestamp
+#       - name: original_loc_stanox
+#         description: If the location has been revised, the STANOX of the location in the schedule at activation time
+#         tests:
+#           - not_null
+#           - dbt_expectations.expect_column_to_exist
+#           - dbt_expectations.expect_column_values_to_be_of_type:
+#               column_type: string
+#       - name: original_loc_timestamp_utc
+#         description: The planned time associated with the original location
+#         tests:
+#           - not_null
+#           - dbt_expectations.expect_column_to_exist
+#           - dbt_expectations.expect_column_values_to_be_of_type:
+#               column_type: timestamp
+#       - name: planned_timestamp_utc
+#         description: The planned date and time that this event was due to happen at this location
+#         tests:
+#           - not_null
+#           - dbt_expectations.expect_column_to_exist
+#           - dbt_expectations.expect_column_values_to_be_of_type:
+#               column_type: timestamp
+#       - name: timetable_variation
+#         description: The number of minutes variation from the scheduled time at this location. Off-route reports will contain "0"
+#         tests:
+#           - not_null
+#           - dbt_expectations.expect_column_to_exist
+#           - dbt_expectations.expect_column_values_to_be_of_type:
+#               column_type: integer
+#       - name: current_train_id
+#         description: Where a train has had its identity changed, the current 10-character unique identity for this train
+#         tests:
+#           - not_null
+#           - dbt_expectations.expect_column_to_exist
+#           - dbt_expectations.expect_column_values_to_be_of_type:
+#               column_type: string
+#       - name: delay_monitoring_point
+#         description: Set to "true" if this is a delay monitoring point, "false" if it is not. Off-route reports will contain "false"
+#         tests:
+#           - not_null
+#           - dbt_expectations.expect_column_to_exist
+#           - dbt_expectations.expect_column_values_to_be_of_type:
+#               column_type: boolean
+#       - name: next_report_run_time
+#         description: The running time to the next location
+#         tests:
+#           - not_null
+#           - dbt_expectations.expect_column_to_exist
+#           - dbt_expectations.expect_column_values_to_be_of_type:
+#               column_type: string
+#       - name: reporting_stanox
+#         description: The STANOX of the location that generated this report. Set to "00000" for manual and off-route reports
+#         tests:
+#           - not_null
+#           - dbt_expectations.expect_column_to_exist
+#           - dbt_expectations.expect_column_values_to_be_of_type:
+#               column_type: string
+#       - name: correction_ind
+#         description: Set to "false" if this report is not a correction of a previous report, or "true" if it is
+#         tests:
+#           - not_null
+#           - dbt_expectations.expect_column_to_exist
+#           - dbt_expectations.expect_column_values_to_be_of_type:
+#               column_type: boolean
+#       - name: event_source
+#         description: Whether the event source was "AUTOMATIC" from SMART, or "MANUAL" from TOPS or TRUST SDR
+#         tests:
+#           - not_null
+#           - dbt_expectations.expect_column_to_exist
+#           - dbt_expectations.expect_column_values_to_be_of_type:
+#               column_type: string
+#       - name: train_file_address
+#         description: The TOPS train file address, if applicable
+#         tests:
+#           - not_null
+#           - dbt_expectations.expect_column_to_exist
+#           - dbt_expectations.expect_column_values_to_be_of_type:
+#               column_type: string
+#       - name: platform
+#         description: Two characters (including a space for a single character) or blank if the movement report is associated with a platform number
+#         tests:
+#           - not_null
+#           - dbt_expectations.expect_column_to_exist
+#           - dbt_expectations.expect_column_values_to_be_of_type:
+#               column_type: string
+#       - name: division_code
+#         description: Operating company ID as per TOC Codes
+#         tests:
+#           - not_null
+#           - dbt_expectations.expect_column_to_exist
+#           - dbt_expectations.expect_column_values_to_be_of_type:
+#               column_type: string
+#       - name: train_terminated
+#         description: Set to "true" if the train has completed its journey, or "false" otherwise
+#         tests:
+#           - not_null
+#           - dbt_expectations.expect_column_to_exist
+#           - dbt_expectations.expect_column_values_to_be_of_type:
+#               column_type: boolean
+#       - name: train_id
+#         description: The 10-character unique identity for this train at TRUST activation time
+#         tests:
+#           - not_null
+#           - dbt_expectations.expect_column_to_exist
+#           - dbt_expectations.expect_column_values_to_be_of_type:
+#               column_type: string
+#       - name: offroute_ind
+#         description: Set to "false" if this report is for a location in the schedule, or "true" if it is not
+#         tests:
+#           - not_null
+#           - dbt_expectations.expect_column_to_exist
+#           - dbt_expectations.expect_column_values_to_be_of_type:
+#               column_type: boolean
+#       - name: variation_status
+#         description: One of "ON TIME", "EARLY", "LATE" or "OFF ROUTE"
+#         tests:
+#           - not_null
+#           - dbt_expectations.expect_column_to_exist
+#           - dbt_expectations.expect_column_values_to_be_of_type:
+#               column_type: string
+#       - name: train_service_code
+#         description: Train service code as per schedule
+#         tests:
+#           - not_null
+#           - dbt_expectations.expect_column_to_exist
+#           - dbt_expectations.expect_column_values_to_be_of_type:
+#               column_type: string
+#       - name: toc_id
+#         description: Operating company ID as per TOC Codes
+#         tests:
+#           - not_null
+#           - dbt_expectations.expect_column_to_exist
+#           - dbt_expectations.expect_column_values_to_be_of_type:
+#               column_type: string
+#       - name: loc_stanox
+#         description: The STANOX of the location at which this event happened
+#         tests:
+#           - not_null
+#           - dbt_expectations.expect_column_to_exist
+#           - dbt_expectations.expect_column_values_to_be_of_type:
+#               column_type: string
+#       - name: auto_expected
+#         description: Set to "true" if an automatic report is expected for this location, otherwise "false"
+#         tests:
+#           - not_null
+#           - dbt_expectations.expect_column_to_exist
+#           - dbt_expectations.expect_column_values_to_be_of_type:
+#               column_type: boolean
+#       - name: direction_ind
+#         description:  For automatic reports, either "UP" or "DOWN" depending on the direction of travel
+#         tests:
+#           - not_null
+#           - dbt_expectations.expect_column_to_exist
+#           - dbt_expectations.expect_column_values_to_be_of_type:
+#               column_type: string
+#       - name: route_status
+#         description: A number or blank to indicate the exit route from this location. A value of 'F' indicates the train failed to stop here
+#         tests:
+#           - not_null
+#           - dbt_expectations.expect_column_to_exist
+#           - dbt_expectations.expect_column_values_to_be_of_type:
+#               column_type: string
+#       - name: planned_event_type
+#         description: The planned type of event - one of "ARRIVAL", "DEPARTURE" or "DESTINATION"
+#         tests:
+#           - not_null
+#           - dbt_expectations.expect_column_to_exist
+#           - dbt_expectations.expect_column_values_to_be_of_type:
+#               column_type: string
+#       - name: next_report_stanox
+#         description: The STANOX of the location at which the next report for this train is due
+#         tests:
+#           - not_null
+#           - dbt_expectations.expect_column_to_exist
+#           - dbt_expectations.expect_column_values_to_be_of_type:
+#               column_type: string
+#       - name: line_ind
+#         description: A single character (or blank) depending on the line the train is travelling on, e.g. F = Fast, S = Slow
+#         tests:
+#           - not_null
+#           - dbt_expectations.expect_column_to_exist
+#           - dbt_expectations.expect_column_values_to_be_of_type:
+#               column_type: string
+      # - name: event_source
+      #   description: Event_source
+      #   tests: 
+      #     - accepted_values:
+      #       values: ['MANUAL', 'AUTOMATIC']
+  - name: stg_networkrail__operating_companies
+    description: Staging model for Seed Operating companies
+    columns:
+      - name: toc_id
+        description: Toc ID
+      - name: company_name
+        description: Company name
